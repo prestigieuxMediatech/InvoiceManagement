@@ -1,4 +1,6 @@
 
+import { error } from "qrcode-terminal"
+import InvoiceModel from "../models/invoiceModel.js"
 import { qoutationModel } from "../models/qoutation.js"
 
 export const createQoutation= async(req,res)=>{
@@ -19,7 +21,7 @@ export const createQoutation= async(req,res)=>{
 
 export const getQoutation=async(req, res)=>{
     try{
-        const Qoutation=await qoutationModel.find({})
+        const Qoutation=await qoutationModel.find({}).sort({_id:-1})
 
         res.json({success:true , Qoutation})
     }
@@ -56,5 +58,19 @@ export const updateQoutationByid=async(req,res)=>{
     }
     catch(e){
         console.log(e.message)
+    }
+}
+
+
+export const deleteQoutationById=async(req,res)=>{
+    try{
+        const{id}=req.params
+        await qoutationModel.findOneAndDelete({_id:id})
+        res.json({success:true, data:"Qoutation Deleted Successfully"})
+
+    }
+    catch(e){
+        console.log(e.message)
+        res.json({success:false, error:e.message})
     }
 }

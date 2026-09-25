@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 export const InvoiceContext=createContext()
 
 const InvoiceContextProvider=(props)=>{
-    const backendUrl='http://localhost:3000/api'
+    const backendUrl=' http://localhost:3000/api'
     
+    //'https://invoicemanagement-x3gp.onrender.com/api'
 //set cookies 
 const setCookie=(name,value)=>{
  document.cookie=`${name}=${value}; path=/`

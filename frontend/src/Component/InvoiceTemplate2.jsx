@@ -13,6 +13,7 @@ import { InvoiceContext } from "../Context/InvoiceContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { sendInvoiceWhatsApp } from "../sendFunctions";
+import InvoiceLoadingSkeleton from "./InvoiceLoadingSkeleton";
 
 window.html2canvas = html2canvas;
 
@@ -563,6 +564,10 @@ const InvoiceTemplate2 = () => {
   ====================================================== */
 
   return (
+
+    wLoading ?(<InvoiceLoadingSkeleton/>)
+    :
+    ( 
     <>
       {/* =====================================================
           PRINT STYLES
@@ -666,6 +671,55 @@ const InvoiceTemplate2 = () => {
             height: `${1000 * scale}px`,
           }}
         >
+
+
+           {/* =====================================================
+            DOWNLOAD BUTTON
+        ====================================================== */}
+
+        <div
+          className="
+            invoice-print-button
+            mx-auto
+            flex
+            max-w-[794px]
+            justify-center
+            print:hidden
+          "
+        >
+          <button
+            onClick={downloadInvoice}
+            className="
+              bg-[#084783]
+              px-6
+              py-3
+              text-sm
+              font-medium
+              text-white
+              transition
+              hover:bg-[#063b78]
+            "
+          >
+            Download Invoice
+          </button>
+
+
+          <button
+            onClick={handleSendWhatsApp}
+            className="
+              bg-[#084783]
+              px-6
+              py-3
+              text-sm
+              font-medium
+              text-white
+              transition
+              hover:bg-[#063b78]
+            "
+          >
+            Whats App
+          </button>
+        </div>
           {/* =====================================================
               INVOICE PAGE
           ====================================================== */}
@@ -673,6 +727,7 @@ const InvoiceTemplate2 = () => {
           <div
             id="invoice"
             className="
+            mt-2
               relative
               h-[1000px]
               w-[794px]
@@ -1525,56 +1580,10 @@ const InvoiceTemplate2 = () => {
           </div>
         </div>
 
-        {/* =====================================================
-            DOWNLOAD BUTTON
-        ====================================================== */}
-
-        <div
-          className="
-            invoice-print-button
-            mx-auto
-            mt-6
-            flex
-            max-w-[794px]
-            justify-center
-            print:hidden
-          "
-        >
-          <button
-            onClick={downloadInvoice}
-            className="
-              bg-[#084783]
-              px-6
-              py-3
-              text-sm
-              font-medium
-              text-white
-              transition
-              hover:bg-[#063b78]
-            "
-          >
-            Download Invoice
-          </button>
-
-
-          <button
-            onClick={handleSendWhatsApp}
-            className="
-              bg-[#084783]
-              px-6
-              py-3
-              text-sm
-              font-medium
-              text-white
-              transition
-              hover:bg-[#063b78]
-            "
-          >
-            Whats App
-          </button>
-        </div>
+       
       </div>
     </>
+  )
   );
 };
 

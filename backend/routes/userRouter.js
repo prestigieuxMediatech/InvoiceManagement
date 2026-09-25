@@ -1,10 +1,10 @@
 import express from "express";
 import { Login} from "../controller/userController.js";
-import { allInvoices, createInvoice, deleteInvoice, invoices, sendInvoiceToWhatsapp, updateInvoice } from "../controller/InvoiceController.js";
+import { allInvoices, createInvoice, deleteInvoice, invoices, sendInvoiceToWhatsapp, setInvoiceStatus, updateInvoice } from "../controller/InvoiceController.js";
 import { AuthUser } from "../middleware/Auth.js";
 import { addItem, deleteItem, getAllItem } from "../controller/ItemController.js";
 import { upload } from "../middleware/multer.js";
-import { createQoutation, getQoutation, getQoutationByid, updateQoutationByid } from "../controller/QoutationController.js";
+import { createQoutation, deleteQoutationById, getQoutation, getQoutationByid, updateQoutationByid } from "../controller/QoutationController.js";
 import { getWhatsAppQRController, getWhatsAppStatusController, logoutWhatsAppController, reconnectWhatsAppController } from "../controller/WhatsAppController.js";
 import { getWhatsAppStatus } from "../config/whatsapp.js";
 
@@ -35,6 +35,10 @@ userRouter.delete('/deleteinvoice/:id',AuthUser,deleteInvoice)
 // send invoice
 userRouter.post("/sendinvoice",AuthUser,upload.single('pdf') ,sendInvoiceToWhatsapp)
 
+// update status 
+userRouter.post("/update-invoice-status",AuthUser,setInvoiceStatus)
+
+
 
 // --------------------------------- ITEM ROUTER  ROUTER ----------------------
 // ``````````````````````````````````````````````````````````````````
@@ -59,6 +63,8 @@ userRouter.get("/get-qoutation-by-id/:id", AuthUser, getQoutationByid)
 // update  Qoutation 
 userRouter.post("/update-qoutation-by-id/:id", AuthUser, updateQoutationByid)
 
+//delete QOutation
+userRouter.delete("/delete-qoutation/:id",AuthUser, deleteQoutationById)
 
 
 
@@ -81,3 +87,4 @@ userRouter.get("/getstatus",AuthUser,getWhatsAppStatusController)
 //  reconnect the whatsApp
 
 userRouter.get("/reconnect", AuthUser,reconnectWhatsAppController)
+

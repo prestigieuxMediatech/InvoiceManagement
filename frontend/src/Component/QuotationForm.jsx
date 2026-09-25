@@ -20,6 +20,7 @@ import {
 import { toast } from "react-toastify";
 import { InvoiceContext } from "../Context/InvoiceContext";
 import axios from "axios";
+import InvoiceFormSkeleton from "./InvoiceFormSkeleton";
 
 /* ============================================================
    HELPERS
@@ -172,6 +173,7 @@ const QuotationForm = () => {
 
   const [quotationNumber] = useState(generateQuotationNumber);
   const{backendUrl, getCookie, navigate}=useContext(InvoiceContext)
+ 
   /* ============================================================
      FORM DATA
      ============================================================ */
@@ -475,8 +477,10 @@ const QuotationForm = () => {
          VALIDATION
          -------------------------------------------------------- */
 
+        
       if (!quotationNumber.trim()) {
         toast.error("Quotation number is missing");
+        
         return;
       }
 
@@ -664,7 +668,7 @@ const QuotationForm = () => {
                  toast.success(
         "Quotation created successfully"
       );
-    
+    setLoading(false)
         }
         else{
             toast.error(response.data.error)
@@ -711,6 +715,8 @@ const QuotationForm = () => {
      ============================================================ */
 
   return (
+    loading ? (<InvoiceFormSkeleton/>)
+    :(
     <div className="min-h-screen bg-slate-50 pb-28">
 
       {/* ======================================================
@@ -1435,6 +1441,7 @@ const QuotationForm = () => {
       </div>
 
     </div>
+    )
   );
 };
 

@@ -11,6 +11,7 @@ import {
 import { InvoiceContext } from "../Context/InvoiceContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import AllInvoiceSkeleton from "./AllInvoiceSkeleton";
 
 const Items = () => {
   const [search, setSearch] = useState("");
@@ -19,6 +20,7 @@ const Items = () => {
    
   ]);
 
+  const[loading, setLoading]=useState(false)
   // Search items
   const filteredItems = items.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase())
@@ -32,11 +34,14 @@ const Items = () => {
  useEffect(()=>{
 const getItem=async()=>{
   try{
+    setLoading(true)
     let token=getCookie('token')
   const response= await axios.get(`${backendUrl}/allitem`,{headers:{token}})
   setItems(response.data?.allitem)
+  setLoading(false)
   }
   catch(e){
+    setLoading(false)
     console.log(e.message)
   }
 }
@@ -62,6 +67,9 @@ const  deleteItem= async(id)=>{
   }
 } 
   return (
+
+    loading ?(<AllInvoiceSkeleton/>)
+:(
     <div className="min-h-screen bg-[#faf9ff] px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
 
@@ -314,6 +322,7 @@ const  deleteItem= async(id)=>{
         </div>
       </div>
     </div>
+  )
   );
 };
 

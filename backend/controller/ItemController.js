@@ -17,7 +17,7 @@ export const  addItem=async(req,res)=>{
 
 export const getAllItem=async(req,res)=>{
         try{
-            const allitem=await itemModel.find()
+            const allitem=await itemModel.find().sort({_id:-1})
             res.json({success:true, allitem})
         }
         catch(e){

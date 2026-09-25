@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import { InvoiceContext } from "../Context/InvoiceContext";
 import { toast } from "react-toastify";
+import AllInvoiceSkeleton from "./AllInvoiceSkeleton";
 
 const Allinvoices = () => {
   const [search, setSearch] = useState("");
@@ -26,15 +27,17 @@ const Allinvoices = () => {
   const [openMenu, setOpenMenu] = useState(null);
 
   const [invoice, setInvoices] = useState([]);
-
+  const[loading, setLoading]=useState(false)
   const { backendUrl, getCookie, navigate } = useContext(InvoiceContext);
   const token=getCookie("token")
+  const[status , setStatus]=useState("unpaid")
   // ============================================================
   // GET ALL INVOICES
   // ============================================================
 
   const getALlInvoices = async () => {
     try {
+      setLoading(true)
       const token = getCookie("token");
 
       const response = await axios.get(
@@ -50,12 +53,30 @@ const Allinvoices = () => {
 
       // Store actual backend data
       setInvoices(response.data.data || []);
+      setLoading(false)
 
     } catch (e) {
+      setLoading(false)
       console.log(e.message);
+      toast.error(e.message)
     }
   };
 
+    const  setInvoiceStatus=async(id)=>{
+        try{
+          console.log(token)
+          const response= await axios.post(`${backendUrl}/update-invoice-status` ,{"id":id , "status":status}, {headers:{token}})
+          console.log(response)
+          if(response.data.success == true ){
+            toast.success("updated successfully")          
+          window.location.reload()
+          }
+        }
+        catch(e){
+          console.log(e.message)
+          toast.error(e.message)
+        }
+    }
 
   const deleteInvoice= async(id)=>{
     try{
@@ -206,7 +227,13 @@ const Allinvoices = () => {
     }
   };
 
+
+
+
   return (
+
+    loading ? (<AllInvoiceSkeleton/>)
+:(
     <div className="min-h-screen bg-[#faf9ff] text-slate-900">
       <main className="mx-auto w-full max-w-[1500px] px-3 py-5 sm:px-6 sm:py-6 lg:px-10">
 
@@ -926,30 +953,36 @@ const Allinvoices = () => {
 
                         {/* STATUS */}
 
-                        <td className="px-4 py-4 sm:px-5 sm:py-5">
+                      {/* STATUS */}
 
-                          <span
-                            className={`
-                              inline-flex
-                              whitespace-nowrap
-                              rounded-full
-                              border
-                              px-2.5
-                              py-1
-                              text-[9px]
-                              font-bold
-                              sm:px-3
-                              sm:py-1.5
-                              sm:text-[11px]
-                              ${getStatusStyle(
-                                invoice.status
-                              )}
-                            `}
-                          >
-                            {invoice.status}
-                          </span>
-
-                        </td>
+<td className="px-4 py-4 sm:px-5 sm:py-5">
+  <select
+    value={invoice.status || "unpaid"}
+    onChange={(e) => {
+      setStatus(e.target.value)
+      setInvoiceStatus(invoice.id)
+      // update status here
+      console.log("Invoice:", invoice._id);
+      console.log("New Status:", status);
+    }}
+    className={`
+      cursor-pointer
+      rounded-full
+      border
+      px-3
+      py-1.5
+      text-[9px]
+      font-bold
+      outline-none
+      sm:text-[11px]
+      ${getStatusStyle(invoice.status)}
+    `}
+  >
+    <option value="paid">Paid</option>
+    <option value="unpaid">Unpaid</option>
+    <option value="overdue">Overdue</option>
+  </select>
+</td>
 
                         {/* ACTION */}
 
@@ -1052,27 +1085,7 @@ const Allinvoices = () => {
                                   Edit Invoice
                                 </button>
 
-                                <button
-                                  type="button"
-                                  className="
-                                    flex
-                                    w-full
-                                    items-center
-                                    gap-3
-                                    rounded-lg
-                                    px-3
-                                    py-2.5
-                                    text-xs
-                                    font-bold
-                                    text-slate-700
-                                    transition
-                                    hover:bg-violet-50
-                                    hover:text-violet-700
-                                  "
-                                >
-                                  <Download size={15} />
-                                  Download PDF
-                                </button>
+                             
 
                                 <div className="my-1 border-t border-violet-100" />
 
@@ -1194,6 +1207,7 @@ const Allinvoices = () => {
         </section>
       </main>
     </div>
+)
   );
 };
 

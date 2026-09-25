@@ -15,6 +15,8 @@ import {
 import axios from "axios";
 import { InvoiceContext } from "../Context/InvoiceContext";
 import Quatation from "./Quatation";
+import AllInvoiceSkeleton from "./AllInvoiceSkeleton";
+import { toast } from "react-toastify";
 
 const AllQuotation = () => {
   const [search, setSearch] = useState("");
@@ -23,10 +25,13 @@ const AllQuotation = () => {
   const [quotations, setQuotations] = useState([]);
   const [openActionId, setOpenActionId] = useState(null);
 
+  const[loading, setLoading]=useState(false)
+
 
 // get ALL Qoutation from backend 
 const getQoutation = async () => {
   try {
+    setLoading(true)
     const response = await axios.get(
       `${backendUrl}/getqoutation`,
       {
@@ -68,8 +73,9 @@ const getQoutation = async () => {
     console.log(formattedQuotations)
 
     setQuotations(formattedQuotations);
-
+    setLoading(false)
   } catch (e) {
+    setLoading(false)
     console.log(e.message);
   }
 };
@@ -117,9 +123,27 @@ getQoutation()
 
   
 
+// Delete Qoutation
+const deleteQoutation=async(id)=>{
+  try{
+    const response=await axios.delete(`${backendUrl}/delete-qoutation/${id}`, {headers:{token}})
+    console.log(response)
+    if (response.data.success == true){
+      toast.success("invoice deleted successfully ")
+       window.location.reload()
+    }
+  }
+  catch(e){
+    console.log(e.message)
+    toast.error(e.message)
+  }
+}
  
 
   return (
+
+    loading ? (<AllInvoiceSkeleton/>)
+    :(
     <div className="min-h-screen bg-[#f7f7f8] p-3 sm:p-5 lg:p-7">
 
       {/* =====================================================
@@ -594,10 +618,8 @@ getQoutation()
                       type="button"
                       onClick={() => {
                         setOpenActionId(null);
-                        console.log(
-                          "Delete:",
-                          quotation._id
-                        );
+                        deleteQoutation(quotation._id)
+                       
                       }}
                       className="
                         flex
@@ -707,6 +729,7 @@ getQoutation()
       </div>
 
     </div>
+    )
   );
 };
 

@@ -5,7 +5,8 @@ import cors from 'cors'
 import { ConnectDB } from './config/mongoDB.js'
 import { userRouter } from './routes/userRouter.js'
 import { connectWhatsApp } from './config/whatsapp.js'
-
+import { checkDueDate } from './controller/InvoiceController.js'
+import corn from "node-cron"
 
 const app=express()
 
@@ -18,6 +19,25 @@ app.use(cors())
 app.use('/api',userRouter)
 
 ConnectDB()
+
+//Am formate 
+//"24 4 * * *"
+
+//Pm Formate
+"27 16 * * *" 
+
+corn.schedule("27 16 * * *",()=>{
+  try{
+    console.log("hii bolte ")
+ checkDueDate()
+  }
+  catch(e){
+    console.log(e.message)
+  }
+
+},)
+
+
 const startServer =
   async () => {
 

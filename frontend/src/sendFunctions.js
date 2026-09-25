@@ -1,5 +1,5 @@
 import html2canvasPro from "html2canvas-pro";
-import jsPDF from "jspdf";
+import { jsPDF } from "jspdf";
 
 export const sendInvoiceWhatsApp = async ({
   setWLoading,
@@ -8,99 +8,209 @@ export const sendInvoiceWhatsApp = async ({
   invoiceData,
   toast,
 }) => {
-  let invoice = null;
-  let originalTransform = "";
+  let invoiceClone = null;
 
   try {
-    // =====================================================
-    // START LOADING
-    // =====================================================
+    /* =====================================================
+        START LOADING
+    ====================================================== */
 
     setWLoading(true);
 
-    // =====================================================
-    // GET INVOICE
-    // =====================================================
+    /* =====================================================
+        GET ORIGINAL INVOICE
+    ====================================================== */
 
-    invoice = document.getElementById("invoice");
+    const invoice =
+      document.getElementById(
+        "invoice"
+      );
 
     if (!invoice) {
-      throw new Error("Invoice element not found");
+      throw new Error(
+        "Invoice element not found"
+      );
     }
 
-    // =====================================================
-    // SAVE CURRENT TRANSFORM
-    // =====================================================
+    /* =====================================================
+        CREATE CLONE
 
-    originalTransform = invoice.style.transform;
+        IMPORTANT:
+        We don't capture the original scaled invoice.
+    ====================================================== */
 
-    // =====================================================
-    // REMOVE RESPONSIVE SCALE
-    // =====================================================
+    invoiceClone =
+      invoice.cloneNode(true);
 
-    invoice.style.transform = "none";
-    invoice.style.transformOrigin = "top left";
+    /* =====================================================
+        REMOVE RESPONSIVE TRANSFORM
+    ====================================================== */
 
-    // =====================================================
-    // WAIT FOR RENDER
-    // =====================================================
+    invoiceClone.style.transform =
+      "none";
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, 100)
+    invoiceClone.style.transformOrigin =
+      "top left";
+
+    /* =====================================================
+        FIX A4 SIZE
+    ====================================================== */
+
+    invoiceClone.style.width =
+      "794px";
+
+    invoiceClone.style.height =
+      "1123px";
+
+    /* =====================================================
+        MOVE CLONE OUTSIDE VIEWPORT
+    ====================================================== */
+
+    invoiceClone.style.position =
+      "absolute";
+
+    invoiceClone.style.left =
+      "-10000px";
+
+    invoiceClone.style.top =
+      "0";
+
+    invoiceClone.style.margin =
+      "0";
+
+    invoiceClone.style.zIndex =
+      "-9999";
+
+    /* =====================================================
+        ADD CLONE TO BODY
+    ====================================================== */
+
+    document.body.appendChild(
+      invoiceClone
     );
 
-    // =====================================================
-    // CAPTURE INVOICE
-    // =====================================================
+    /* =====================================================
+        WAIT FOR BROWSER RENDER
+    ====================================================== */
 
-    const canvas = await html2canvasPro(invoice, {
-      scale: 2,
-
-      useCORS: true,
-
-      allowTaint: false,
-
-      backgroundColor: "#ffffff",
-
-      logging: false,
-
-      width: 794,
-
-      height: 1123,
-
-      windowWidth: 794,
-
-      windowHeight: 1123,
-    });
-
-    // =====================================================
-    // RESTORE ORIGINAL SCALE
-    // =====================================================
-
-    invoice.style.transform = originalTransform;
-
-    // =====================================================
-    // CONVERT TO IMAGE
-    // =====================================================
-
-    const imgData = canvas.toDataURL(
-      "image/jpeg",
-      1.0
+    await new Promise(
+      (resolve) => {
+        requestAnimationFrame(
+          () => {
+            requestAnimationFrame(
+              resolve
+            );
+          }
+        );
+      }
     );
 
-    // =====================================================
-    // CREATE A4 PDF
-    // =====================================================
+    /* =====================================================
+        WAIT FOR IMAGES
+    ====================================================== */
 
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
+    const images =
+      Array.from(
+        invoiceClone.querySelectorAll(
+          "img"
+        )
+      );
 
-    // =====================================================
-    // ADD IMAGE TO A4
-    // =====================================================
+    await Promise.all(
+      images.map((img) => {
+        if (img.complete) {
+          return Promise.resolve();
+        }
+
+        return new Promise(
+          (resolve) => {
+            img.onload =
+              resolve;
+
+            img.onerror =
+              resolve;
+          }
+        );
+      })
+    );
+
+    /* =====================================================
+        CAPTURE CLONE
+    ====================================================== */
+
+    const canvas =
+      await html2canvasPro(
+        invoiceClone,
+        {
+          scale: 2,
+
+          useCORS: true,
+
+          allowTaint: false,
+
+          backgroundColor:
+            "#ffffff",
+
+          logging: false,
+
+          width: 794,
+
+          height: 1123,
+
+          windowWidth: 794,
+
+          windowHeight: 1123,
+
+          scrollX: 0,
+
+          scrollY: 0,
+        }
+      );
+
+    /* =====================================================
+        REMOVE CLONE
+    ====================================================== */
+
+    if (
+      invoiceClone &&
+      document.body.contains(
+        invoiceClone
+      )
+    ) {
+      document.body.removeChild(
+        invoiceClone
+      );
+
+      invoiceClone = null;
+    }
+
+    /* =====================================================
+        CANVAS → IMAGE
+    ====================================================== */
+
+    const imgData =
+      canvas.toDataURL(
+        "image/jpeg",
+        1.0
+      );
+
+    /* =====================================================
+        CREATE A4 PDF
+    ====================================================== */
+
+    const pdf =
+      new jsPDF({
+        orientation:
+          "portrait",
+
+        unit: "mm",
+
+        format: "a4",
+      });
+
+    /* =====================================================
+        ADD IMAGE TO PDF
+    ====================================================== */
 
     pdf.addImage(
       imgData,
@@ -113,30 +223,60 @@ export const sendInvoiceWhatsApp = async ({
       "FAST"
     );
 
-    // =====================================================
-    // CREATE PDF BLOB
-    // =====================================================
+    /* =====================================================
+        CREATE PDF BLOB
+    ====================================================== */
 
-    const pdfBlob = pdf.output("blob");
+    const pdfBlob =
+      pdf.output("blob");
 
-    // =====================================================
-    // CREATE FORM DATA
-    // =====================================================
-
-    const formData = new FormData();
-
-    // =====================================================
-    // WHATSAPP NUMBER
-    // =====================================================
-      console.log(invoiceData)
-    formData.append(
-      "phone",
-      invoiceData?.Cphone || invoiceData.client.phone || ""
+    console.log(
+      "PDF generated:",
+      pdfBlob.size
     );
 
-    // =====================================================
-    // PDF FILE
-    // =====================================================
+    /* =====================================================
+        GET WHATSAPP NUMBER
+    ====================================================== */
+
+    const phone =
+      invoiceData?.Cphone ||
+      invoiceData?.client?.phone ||
+      "";
+
+    console.log(
+      "WhatsApp Phone:",
+      phone
+    );
+
+    if (!phone) {
+      throw new Error(
+        "Customer WhatsApp number is missing"
+      );
+    }
+
+    /* =====================================================
+        CREATE FORM DATA
+    ====================================================== */
+
+    const formData =
+      new FormData();
+
+    /* =====================================================
+        PHONE
+    ====================================================== */
+
+    formData.append(
+      "phone",
+      phone
+    );
+
+    /* =====================================================
+        PDF
+
+        IMPORTANT:
+        Backend must use upload.single("pdf")
+    ====================================================== */
 
     formData.append(
       "pdf",
@@ -147,81 +287,108 @@ export const sendInvoiceWhatsApp = async ({
       }.pdf`
     );
 
-    // =====================================================
-    // SEND TO BACKEND
-    // =====================================================
+    /* =====================================================
+        DEBUG FORM DATA
+    ====================================================== */
 
-    const response = await fetch(
-      `${backendUrl}/sendinvoice`,
-      {
-        method: "POST",
-
-        body: formData,
-
-        headers: {
-          token,
-        },
-      }
+    console.log(
+      "Sending invoice to:",
+      `${backendUrl}/sendinvoice`
     );
 
-    // =====================================================
-    // BACKEND RESPONSE
-    // =====================================================
+    /* =====================================================
+        SEND TO BACKEND
+    ====================================================== */
 
-    const data = await response.json();
+    const response =
+      await fetch(
+        `${backendUrl}/sendinvoice`,
+        {
+          method: "POST",
+
+          body: formData,
+
+          headers: {
+            token,
+          },
+        }
+      );
+
+    /* =====================================================
+        RESPONSE
+    ====================================================== */
+
+    const data =
+      await response.json();
 
     console.log(
       "WhatsApp response:",
       data
     );
 
-    // =====================================================
-    // SUCCESS
-    // =====================================================
+    /* =====================================================
+        CHECK RESPONSE
+    ====================================================== */
 
-    if (data.success) {
-      setWLoading(false);
-
-      toast.success(
-        "Invoice sent on WhatsApp ✅"
-      );
-    } else {
-      setWLoading(false);
-
-      toast.error(
+    if (
+      !response.ok ||
+      !data.success
+    ) {
+      throw new Error(
         data.message ||
           "Failed to send invoice"
       );
     }
-  } catch (error) {
-    // =====================================================
-    // RESTORE ORIGINAL SCALE
-    // =====================================================
 
-    if (invoice) {
-      invoice.style.transform =
-        originalTransform;
+    /* =====================================================
+        SUCCESS
+    ====================================================== */
+
+    toast.success(
+      "Invoice sent on WhatsApp ✅"
+    );
+
+  } catch (error) {
+
+    /* =====================================================
+        REMOVE CLONE IF ERROR
+    ====================================================== */
+
+    if (
+      invoiceClone &&
+      document.body.contains(
+        invoiceClone
+      )
+    ) {
+      document.body.removeChild(
+        invoiceClone
+      );
     }
 
-    // =====================================================
-    // STOP LOADING
-    // =====================================================
-
-    setWLoading(false);
-
-    // =====================================================
-    // ERROR
-    // =====================================================
+    /* =====================================================
+        LOG ERROR
+    ====================================================== */
 
     console.error(
       "Failed to send invoice:",
       error
     );
 
+    /* =====================================================
+        SHOW ERROR
+    ====================================================== */
+
     toast.error(
-      "Failed to send invoice"
+      error.message ||
+        "Failed to send invoice"
     );
+
+  } finally {
+
+    /* =====================================================
+        STOP LOADING
+    ====================================================== */
+
+    setWLoading(false);
   }
 };
-
-
