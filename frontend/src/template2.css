@@ -1,0 +1,1111 @@
+/* ============================================================
+   GLOBAL
+============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   INVOICE OUTER CONTAINER
+============================================================ */
+
+.invoice-container {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 30px 16px 50px;
+
+  background: #e5e7eb;
+
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   INVOICE WRAPPER
+
+   IMPORTANT:
+   This wrapper receives the scaled dimensions from React.
+============================================================ */
+
+.invoice-wrapper {
+  position: relative;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  flex-shrink: 0;
+}
+
+
+/* ============================================================
+   ACTUAL INVOICE
+
+   DO NOT CHANGE THIS TO WIDTH: 100%.
+
+   This is the original invoice size.
+============================================================ */
+
+.invoice-page {
+  position: relative;
+
+  width: 794px;
+  height: 1000px;
+
+  min-width: 794px;
+  min-height: 1000px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  color: #555555;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  transform-origin: top left;
+}
+
+
+/* ============================================================
+   BLUE HEADER
+============================================================ */
+
+.invoice-header {
+  position: relative;
+
+  width: 794px;
+  height: 190px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+
+/* ============================================================
+   DARK HEADER BACKGROUND
+============================================================ */
+
+.header-dark-bg {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 190px;
+
+  background: #111827;
+
+  z-index: 1;
+}
+
+
+/* ============================================================
+   TOP BLUE WAVE
+============================================================ */
+
+.header-top-wave {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 794px;
+  height: 100px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   BOTTOM WHITE WAVE
+============================================================ */
+
+.header-bottom-wave {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 794px;
+  height: 120px;
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   HEADER CONTENT
+============================================================ */
+
+.header-content {
+  position: relative;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 32px 42px 0;
+}
+
+
+/* ============================================================
+   LOGO
+============================================================ */
+
+.logo-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  width: 280px;
+
+  z-index: 20;
+}
+
+
+.invoice-logo {
+  display: block;
+
+  width: auto;
+  max-width: 220px;
+  height: auto;
+  max-height: 70px;
+
+  object-fit: contain;
+}
+
+
+/* ============================================================
+   INVOICE NUMBER
+============================================================ */
+
+.invoice-number {
+  position: relative;
+
+  z-index: 20;
+
+  margin-top: 10px;
+
+  text-align: right;
+}
+
+
+.invoice-number p {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+
+.invoice-number span {
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   MAIN CONTENT
+============================================================ */
+
+.invoice-main {
+  position: relative;
+
+  width: 100%;
+
+  padding: 0 45px;
+
+  z-index: 10;
+}
+
+
+/* ============================================================
+   BILL SECTION
+============================================================ */
+
+.bill-section {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 80px;
+
+  padding-top: 10px;
+}
+
+
+/* ============================================================
+   BILL COLUMN
+============================================================ */
+
+.bill-column {
+  min-width: 0;
+}
+
+
+.bill-title {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+.bill-details {
+  margin: 0;
+}
+
+
+.bill-details p {
+  margin: 3px 0;
+
+  font-size: 10px;
+
+  line-height: 1.45;
+
+  color: #555555;
+
+  word-break: break-word;
+}
+
+
+.bill-details .bill-name {
+  margin-bottom: 7px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: #222222;
+}
+
+
+/* ============================================================
+   FROM COLUMN
+============================================================ */
+
+.from-column {
+  min-width: 0;
+
+  text-align: right;
+}
+
+
+.from-title {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+.from-details {
+  margin: 0;
+}
+
+
+.from-details p {
+  margin: 3px 0;
+
+  font-size: 10px;
+
+  line-height: 1.45;
+
+  color: #555555;
+
+  word-break: break-word;
+}
+
+
+.from-details .from-name {
+  margin-bottom: 7px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: #222222;
+}
+
+
+/* ============================================================
+   DATE
+============================================================ */
+
+.invoice-date {
+  width: 100%;
+
+  margin-top: 20px;
+
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+
+.invoice-date p {
+  margin: 0;
+
+  font-size: 10px;
+
+  color: #555555;
+}
+
+
+.invoice-date span {
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+/* ============================================================
+   TABLE SECTION
+============================================================ */
+
+.invoice-table-section {
+  width: 100%;
+
+  margin-top: 22px;
+}
+
+
+/* ============================================================
+   TABLE
+============================================================ */
+
+.invoice-table {
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: 2px;
+}
+
+
+/* ============================================================
+   TABLE HEADER
+============================================================ */
+
+.invoice-table-header {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    70px
+    120px
+    130px;
+
+  width: 100%;
+
+  min-height: 40px;
+
+  background: #0b5aa6;
+
+  color: #ffffff;
+}
+
+
+.table-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 10px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+
+  color: #ffffff;
+}
+
+
+.description-header {
+  justify-content: flex-start;
+
+  padding-left: 18px;
+}
+
+
+.total-header {
+  justify-content: flex-end;
+
+  padding-right: 18px;
+}
+
+
+/* ============================================================
+   TABLE ROW
+============================================================ */
+
+.invoice-table-row {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    70px
+    120px
+    130px;
+
+  width: 100%;
+
+  min-height: 55px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  background: #ffffff;
+}
+
+
+/* ============================================================
+   DESCRIPTION
+============================================================ */
+
+.table-description {
+  display: flex;
+
+  align-items: center;
+
+  min-width: 0;
+
+  padding: 9px 18px;
+}
+
+
+.table-description p {
+  margin: 0;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+
+  color: #333333;
+
+  word-break: break-word;
+}
+
+
+.item-service {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 8px;
+
+  line-height: 1.3;
+
+  color: #9ca3af;
+}
+
+
+/* ============================================================
+   TABLE CELL
+============================================================ */
+
+.table-cell {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 8px;
+
+  font-size: 10px;
+
+  color: #555555;
+
+  text-align: center;
+}
+
+
+/* ============================================================
+   TABLE TOTAL
+============================================================ */
+
+.table-total {
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  padding: 8px 18px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  color: #222222;
+
+  text-align: right;
+}
+
+
+/* ============================================================
+   NO ITEMS
+============================================================ */
+
+.no-items {
+  width: 100%;
+
+  padding: 20px;
+
+  text-align: center;
+
+  font-size: 10px;
+
+  color: #999999;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   SUBTOTAL
+============================================================ */
+
+.subtotal-wrapper {
+  display: flex;
+
+  justify-content: flex-end;
+
+  width: 100%;
+
+  margin-top: 10px;
+}
+
+
+.subtotal-box {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  width: 270px;
+
+  padding: 9px 14px;
+
+  background: #f3f7fb;
+
+  border-left: 3px solid #0b5aa6;
+}
+
+
+.subtotal-label {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #555555;
+}
+
+
+.subtotal-value {
+  font-size: 11px;
+
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+/* ============================================================
+   NOTES + SIGNATURE
+============================================================ */
+
+.notes-signature-section {
+  display: grid;
+
+  grid-template-columns: 1fr 230px;
+
+  column-gap: 70px;
+
+  width: 100%;
+
+  margin-top: 28px;
+}
+
+
+/* ============================================================
+   NOTES
+============================================================ */
+
+.notes-column {
+  min-width: 0;
+}
+
+
+.notes-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+
+.notes-heading h3 {
+  margin: 0;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+.notes-line {
+  flex: 1;
+
+  height: 1px;
+
+  background: #dbe3eb;
+}
+
+
+.notes-list {
+  width: 100%;
+}
+
+
+.note-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-bottom: 7px;
+}
+
+
+.note-bullet {
+  flex-shrink: 0;
+
+  width: 5px;
+  height: 5px;
+
+  margin-top: 5px;
+
+  border-radius: 50%;
+
+  background: #0b5aa6;
+}
+
+
+.note-item p {
+  margin: 0;
+
+  font-size: 9px;
+
+  line-height: 1.45;
+
+  color: #666666;
+
+  word-break: break-word;
+}
+
+
+.no-notes {
+  margin: 0;
+
+  font-size: 9px;
+
+  color: #999999;
+}
+
+
+/* ============================================================
+   SIGNATURE
+============================================================ */
+
+.signature-column {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  min-width: 0;
+}
+
+
+.signature-image {
+  display: block;
+
+  width: 130px;
+  height: 55px;
+
+  object-fit: contain;
+
+  margin-bottom: 3px;
+}
+
+
+.signature-line {
+  width: 170px;
+
+  height: 1px;
+
+  background: #555555;
+}
+
+
+.signature-label {
+  margin: 6px 0 0;
+
+  font-size: 9px;
+
+  color: #555555;
+
+  text-align: center;
+}
+
+
+/* ============================================================
+   THANK YOU
+============================================================ */
+
+.thank-you {
+  position: absolute;
+
+  left: 0;
+
+  bottom: 28px;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+
+.thank-you h2 {
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  color: #0b5aa6;
+}
+
+
+/* ============================================================
+   BOTTOM BLUE ACCENT
+============================================================ */
+
+.bottom-blue-accent {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  height: 10px;
+
+  background: #0b5aa6;
+
+  z-index: 30;
+}
+
+
+/* ============================================================
+   ACTION BUTTONS
+============================================================ */
+
+.invoice-print-button {
+  width: 794px;
+
+  max-width: calc(100vw - 32px);
+
+  margin: 30px auto 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+}
+
+
+.invoice-action-button {
+  min-width: 170px;
+
+  padding: 12px 20px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #0b5aa6;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.invoice-action-button:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.95;
+}
+
+
+.invoice-action-button:active {
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 850px) {
+
+  .invoice-container {
+    padding-left: 0;
+    padding-right: 0;
+
+    overflow-x: hidden;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 640px) {
+
+  .invoice-container {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding:
+      16px
+      0
+      30px;
+
+    overflow-x: hidden;
+  }
+
+
+  /*
+    IMPORTANT:
+
+    Do NOT change .invoice-page width.
+
+    React is scaling the whole invoice.
+  */
+
+  .invoice-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+
+  /*
+    Buttons are outside the scaled invoice,
+    therefore they can actually be responsive.
+  */
+
+  .invoice-print-button {
+    width: 100%;
+
+    max-width: none;
+
+    padding:
+      0
+      16px;
+
+    margin-top: 20px;
+
+    gap: 8px;
+  }
+
+
+  .invoice-action-button {
+    flex: 1;
+
+    min-width: 0;
+
+    padding:
+      11px
+      8px;
+
+    font-size: 12px;
+  }
+
+}
+
+
+/* ============================================================
+   VERY SMALL MOBILE
+============================================================ */
+
+@media (max-width: 380px) {
+
+  .invoice-print-button {
+    flex-direction: column;
+
+    padding:
+      0
+      12px;
+  }
+
+
+  .invoice-action-button {
+    width: 100%;
+
+    flex: none;
+  }
+
+}
+
+
+/* ============================================================
+   PRINT
+============================================================ */
+
+@page {
+  size: A4 portrait;
+
+  margin: 0;
+}
+
+
+@media print {
+
+  html,
+  body {
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: #ffffff !important;
+  }
+
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+
+    print-color-adjust: exact !important;
+  }
+
+
+  .invoice-container {
+    width: 794px !important;
+
+    min-height: 1000px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    background: #ffffff !important;
+
+    overflow: visible !important;
+  }
+
+
+  .invoice-wrapper {
+    width: 794px !important;
+
+    height: 1000px !important;
+
+    margin: 0 !important;
+  }
+
+
+  #invoice {
+    width: 794px !important;
+
+    height: 1000px !important;
+
+    min-width: 794px !important;
+
+    min-height: 1000px !important;
+
+    transform: scale(1) !important;
+
+    transform-origin: top left !important;
+
+    box-shadow: none !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .invoice-print-button {
+    display: none !important;
+  }
+
+}
