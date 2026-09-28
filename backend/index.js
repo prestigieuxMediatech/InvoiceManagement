@@ -24,7 +24,7 @@ ConnectDB()
 //"24 4 * * *"
 
 //Pm Formate
-"27 16 * * *" 
+// "27 16 * * *" 
 
 corn.schedule("27 16 * * *",()=>{
   try{
@@ -53,7 +53,7 @@ const startServer =
       // WhatsApp
       // -----------------------------------------------
 
-      await connectWhatsApp();
+      // await connectWhatsApp();
 
 
       // -----------------------------------------------

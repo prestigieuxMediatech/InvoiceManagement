@@ -58,7 +58,7 @@ const WhatsAppConnect = () => {
            console.log(response)
            if(response.data.success == true){
             toast.success(" logout successfully ")
-            window.location.reload
+            window.location.reload()
            }
         }
         catch(e){
@@ -72,9 +72,13 @@ const WhatsAppConnect = () => {
       try{
         const response=await axios.get(`${backendUrl}/reconnect`,{headers:{token}})
         console.log(response)
+        if(response.data.success == true ){
+          window.location.reload()
+        }
       }
       catch(e){
         console.log(e.message)
+        toast.error(e.message)
       }
     }
 
