@@ -21,9 +21,9 @@ type:{}
 },
 
 
-project:{
-    type:{}
-},
+// project:{
+//     type:{}
+// },
 
 
 services:{
@@ -40,9 +40,7 @@ total:{
     type:Number
 },
 
-validUntil:{
-    type:String
-},
+
 })
 
 export const qoutationModel=mongoose.model("qoutation", qoutationSchema)

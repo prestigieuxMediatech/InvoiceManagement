@@ -265,7 +265,7 @@ const Quatation = () => {
     :(
     <div
       className="
-       
+        min-h-screen
         w-full
         overflow-x-hidden
         bg-[#e8e8e5]
@@ -376,7 +376,7 @@ const Quatation = () => {
             id="invoice"
             className="
               relative
-             
+              h-[1123px]
               w-[794px]
               overflow-hidden
               bg-white
@@ -572,414 +572,330 @@ const Quatation = () => {
                       {formatDate(quotation.date)}
                     </p>
 
-                  
+                    {quotation.validUntil && (
+                      <>
+                        <p
+                          className="
+                            mt-5
+                            text-[9px]
+                            font-medium
+                            uppercase
+                            tracking-[2px]
+                            text-[#999]
+                          "
+                        >
+                          Valid Until
+                        </p>
+
+                        <p className="mt-1 text-[12px] font-bold">
+                          {formatDate(quotation.validUntil)}
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </header>
 
-             
+              {/* =================================================
+                  CLIENT
+              ================================================== */}
 
-           
+              <section className="mt-[38px]">
+                <div className="flex items-start justify-between">
+                  {/* CLIENT */}
+
+                  <div className="min-w-0 max-w-[310px]">
+                    <p
+                      className="
+                        text-[9px]
+                        font-bold
+                        uppercase
+                        tracking-[2px]
+                        text-[#999]
+                      "
+                    >
+                      Prepared For
+                    </p>
+
+                    <h2
+                      className="
+                        mt-2
+                        text-[24px]
+                        font-bold
+                        tracking-[-0.5px]
+                      "
+                    >
+                      {quotation.client?.name || "-"}
+                    </h2>
+
+                    <p className="mt-1 text-[10px] leading-4 text-[#666]">
+                      {quotation.client?.address || "-"}
+                    </p>
+
+                    {quotation.client?.email && (
+                      <p className="mt-1 text-[9px] text-[#777]">
+                        {quotation.client.email}
+                      </p>
+                    )}
+
+                    {quotation.client?.phone && (
+                      <p className="mt-1 text-[9px] text-[#777]">
+                        {quotation.client.phone}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* PROJECT */}
+
+                  <div className="w-[205px]">
+                    <p
+                      className="
+                        text-[9px]
+                        font-bold
+                        uppercase
+                        tracking-[2px]
+                        text-[#999]
+                      "
+                    >
+                      Project
+                    </p>
+
+                    <p className="mt-2 text-[12px] font-semibold leading-4">
+                      {quotation.project?.name || "-"}
+                    </p>
+
+                    <p className="mt-1 text-[10px] leading-4 text-[#777]">
+                      {quotation.project?.description || "-"}
+                    </p>
+
+                    {quotation.billing && (
+                      <p className="mt-2 text-[9px] font-semibold uppercase tracking-[1px] text-[#777]">
+                        Billing: {quotation.billing}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-5 border-t border-black" />
+              </section>
+
+              {/* =================================================
+                  INTRODUCTION
+              ================================================== */}
+
+              <section
+                className="
+                  mt-6
+                  grid
+                  grid-cols-[115px_1fr]
+                  gap-5
+                "
+              >
+                <div>
+                  <p
+                    className="
+                      text-[9px]
+                      font-bold
+                      uppercase
+                      tracking-[2px]
+                      text-[#2563eb]
+                    "
+                  >
+                    Introduction
+                  </p>
+                </div>
+
+                <p
+                  className="
+                    max-w-[420px]
+                    text-[10px]
+                    leading-[1.5]
+                    text-[#555]
+                  "
+                >
+                  We are pleased to present the following quotation for digital
+                  services. The scope below has been structured to provide
+                  consistent creative, marketing and technical support for your
+                  business.
+                </p>
+              </section>
 
               {/* =================================================
                   SERVICES
               ================================================== */}
-<section className="mt-7">
 
-  {/* =====================================================
-      SECTION HEADER
-  ===================================================== */}
-
-  <div
-    className="
-      flex
-      items-end
-      justify-between
-      border-b-2
-      border-black
-      pb-3
-    "
-  >
-    <div>
-      <p
-        className="
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[2px]
-          text-[#2563eb]
-        "
-      >
-        Services
-      </p>
-
-      <h2 className="mt-1 text-[23px] font-bold">
-        Scope of Work
-      </h2>
-    </div>
-
-    <p
-      className="
-        text-[10px]
-        uppercase
-        tracking-[1.5px]
-        text-[#999]
-      "
-    >
-      {quotation.billing || "Monthly"}
-    </p>
-  </div>
-
-
-  {/* =====================================================
-      SERVICES TABLE
-  ===================================================== */}
-
-  <div className="mt-4 overflow-hidden rounded-md border border-[#cfcfcf]">
-
-    {/* ===================================================
-        TABLE HEADER
-    =================================================== */}
-
-    <div
-      className="
-        grid
-        grid-cols-[55px_190px_minmax(0,1fr)_115px]
-        bg-[#111827]
-        text-white
-      "
-    >
-
-      {/* NUMBER */}
-
-      <div
-        className="
-          border-r
-          border-white/20
-          px-2
-          py-3
-          text-center
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[1px]
-        "
-      >
-        No.
-      </div>
-
-
-      {/* SERVICE */}
-
-      <div
-        className="
-          border-r
-          border-white/20
-          px-3
-          py-3
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[1px]
-        "
-      >
-        Service
-      </div>
-
-
-      {/* DELIVERABLES */}
-
-      <div
-        className="
-          border-r
-          border-white/20
-          px-3
-          py-3
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[1px]
-        "
-      >
-        Deliverables
-      </div>
-
-
-      {/* INVESTMENT */}
-
-      <div
-        className="
-          px-3
-          py-3
-          text-center
-          text-[10px]
-          font-bold
-          uppercase
-          tracking-[1px]
-        "
-      >
-        Investment
-      </div>
-
-    </div>
-
-
-    {/* ===================================================
-        TABLE BODY
-    =================================================== */}
-
-    {services.length > 0 ? (
-
-      services.map((service, index) => (
-
-        <div
-          key={`${service.no || index}-${service.title || index}`}
-          className="
-            grid
-            grid-cols-[55px_190px_minmax(0,1fr)_115px]
-            border-t
-            border-[#d8d8d8]
-            bg-white
-            transition
-            hover:bg-[#f8fafc]
-          "
-        >
-
-          {/* =================================================
-              NUMBER
-          ================================================= */}
-
-          <div
-            className="
-              flex
-              items-start
-              justify-center
-              border-r
-              border-[#d8d8d8]
-              px-2
-              py-4
-            "
-          >
-
-            <span
-              className="
-                text-[14px]
-                font-bold
-                text-[#2563eb]
-              "
-            >
-              {service.no ||
-                String(index + 1).padStart(2, "0")}
-            </span>
-
-          </div>
-
-
-          {/* =================================================
-              SERVICE TITLE
-          ================================================= */}
-
-          <div
-            className="
-              border-r
-              border-[#d8d8d8]
-              px-4
-              py-4
-            "
-          >
-
-            <h3
-              className="
-                break-words
-                text-[15px]
-                font-bold
-                leading-5
-                text-[#111827]
-              "
-            >
-              {service.title || "-"}
-            </h3>
-
-            <p
-              className="
-                mt-1
-                text-[9px]
-                uppercase
-                tracking-[0.8px]
-                text-[#999]
-              "
-            >
-              {quotation.billing || "Monthly"}
-            </p>
-
-          </div>
-
-
-          {/* =================================================
-              DELIVERABLES
-          ================================================= */}
-
-          <div
-            className="
-              border-r
-              border-[#d8d8d8]
-              px-4
-              py-4
-            "
-          >
-
-            {Array.isArray(service.deliverables) &&
-            service.deliverables.length > 0 ? (
-
-              <div className="grid grid-cols-1 gap-x-5 gap-y-2">
-
-                {service.deliverables.map(
-                  (item, itemIndex) => (
-
-                    <div
-                      key={`${item}-${itemIndex}`}
+              <section className="mt-7">
+                <div
+                  className="
+                    flex
+                    items-end
+                    justify-between
+                    border-b-2
+                    border-black
+                    pb-3
+                  "
+                >
+                  <div>
+                    <p
                       className="
-                        flex
-                        min-w-0
-                        items-start
-                        gap-2
+                        text-[9px]
+                        font-bold
+                        uppercase
+                        tracking-[2px]
+                        text-[#2563eb]
                       "
                     >
+                      Services
+                    </p>
 
-                      {/* BULLET */}
+                    <h2 className="mt-1 text-[21px] font-bold">
+                      Scope of Work
+                    </h2>
+                  </div>
 
-                      <span
+                  <p
+                    className="
+                      text-[9px]
+                      uppercase
+                      tracking-[1.5px]
+                      text-[#999]
+                    "
+                  >
+                    {quotation.billing || "Monthly"}
+                  </p>
+                </div>
+
+                {/* SERVICE LIST */}
+
+                <div>
+                  {services.length > 0 ? (
+                    services.map((service, index) => (
+                      <div
+                        key={`${service.no || index}-${service.title || index}`}
                         className="
-                          mt-[6px]
-                          h-[5px]
-                          w-[5px]
-                          shrink-0
-                          rounded-full
-                          bg-[#2563eb]
-                        "
-                      />
-
-                      {/* TEXT */}
-
-                      <span
-                        className="
-                          break-words
-                          text-[10px]
-                          leading-[14px]
-                          text-[#444]
+                          grid
+                          grid-cols-[32px_minmax(0,1fr)_100px]
+                          gap-3
+                          border-b
+                          border-[#d8d8d8]
+                          py-3
                         "
                       >
-                        {item}
-                      </span>
+                        {/* NUMBER */}
 
+                        <div>
+                          <p
+                            className="
+                              text-[15px]
+                              font-bold
+                              text-[#2563eb]
+                            "
+                          >
+                            {service.no || String(index + 1).padStart(2, "0")}
+                          </p>
+                        </div>
+
+                        {/* SERVICE DETAILS */}
+
+                        <div className="min-w-0">
+                          <h3
+                            className="
+                              text-[16px]
+                              font-bold
+                              leading-5
+                            "
+                          >
+                            {service.title || "-"}
+                          </h3>
+
+                          <div
+                            className="
+                              mt-2
+                              grid
+                              grid-cols-2
+                              gap-x-4
+                              gap-y-[2px]
+                            "
+                          >
+                            {Array.isArray(service.deliverables) &&
+                            service.deliverables.length > 0 ? (
+                              service.deliverables.map((item, itemIndex) => (
+                                <div
+                                  key={`${item}-${itemIndex}`}
+                                  className="
+                                    flex
+                                    min-w-0
+                                    items-start
+                                    gap-2
+                                  "
+                                >
+                                  <span
+                                    className="
+                                      mt-[6px]
+                                      h-[3px]
+                                      w-[3px]
+                                      shrink-0
+                                      bg-black
+                                    "
+                                  />
+
+                                  <span
+                                    className="
+                                      text-[10px]
+                                      leading-[1.35]
+                                      text-[#444]
+                                    "
+                                  >
+                                    {item}
+                                  </span>
+                                </div>
+                              ))
+                            ) : (
+                              <p className="text-[10px] text-[#777]">
+                                No deliverables specified.
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* PRICE */}
+
+                        <div
+                          className="
+                            border-l
+                            border-[#d8d8d8]
+                            pl-3
+                          "
+                        >
+                          <p
+                            className="
+                              text-[8px]
+                              uppercase
+                              tracking-[1px]
+                              text-[#999]
+                            "
+                          >
+                            Investment
+                          </p>
+
+                          <p className="mt-2 text-[16px] font-bold">
+                            ₹{formatPrice(service.price)}
+                          </p>
+
+                          <p className="mt-0.5 text-[9px] text-[#888]">
+                            / {String(quotation.billing || "month").toLowerCase()}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-6 text-center text-[10px] text-[#777]">
+                      No services found.
                     </div>
+                  )}
+                </div>
+              </section>
 
-                  )
-                )}
-
-              </div>
-
-            ) : (
-
-              <p
-                className="
-                  text-[10px]
-                  italic
-                  text-[#777]
-                "
-              >
-                No deliverables specified.
-              </p>
-
-            )}
-
-          </div>
-
-
-          {/* =================================================
-              INVESTMENT
-          ================================================= */}
-
-          <div
-            className="
-              flex
-              flex-col
-              items-center
-              justify-center
-              px-3
-              py-4
-              text-center
-            "
-          >
-
-            <p
-              className="
-                text-[9px]
-                font-medium
-                uppercase
-                tracking-[1px]
-                text-[#999]
-              "
-            >
-              Investment
-            </p>
-
-            <p
-              className="
-                mt-1
-                text-[16px]
-                font-bold
-                leading-5
-                text-[#111827]
-              "
-            >
-              ₹{formatPrice(service.price)}
-            </p>
-
-            <p
-              className="
-                mt-1
-                text-[9px]
-                text-[#888]
-              "
-            >
-              / {String(
-                quotation.billing || "month"
-              ).toLowerCase()}
-            </p>
-
-          </div>
-
-        </div>
-
-
-       
-
-      ))
-
-
-
-      
-
-    ) : (
-
-      <div
-        className="
-          px-4
-          py-8
-          text-center
-          text-[11px]
-          text-[#777]
-        "
-      >
-        No services found.
-      </div>
-
-    )}
-
-  </div>
-
-</section>
               {/* =================================================
                   TOTAL
               ================================================== */}

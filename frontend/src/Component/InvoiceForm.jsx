@@ -260,7 +260,7 @@ const InvoiceForm = ({ onClose }) => {
 
       if (response.data?.success !== false) {
         toast.success("Invoice created successfully");
-         navigate('/allinvoice')
+         navigate('/home')
 
         if (onClose) {
           onClose();

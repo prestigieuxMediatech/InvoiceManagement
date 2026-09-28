@@ -308,48 +308,48 @@ const deleteQoutation=async(id)=>{
     ← Swipe horizontally to view all quotation details →
   </div>
 
-<div className="w-full overflow-x-auto">
-  <table className="w-full min-w-[1050px] border-collapse">
+<div className="w-full overflow-x-auto rounded-xl border border-gray-200">
+  <table className="w-full min-w-[800px] border-collapse">
 
-    {/* TABLE HEADER */}
+    {/* ================= TABLE HEADER ================= */}
     <thead>
       <tr className="bg-violet-600 text-left text-xs font-bold uppercase tracking-wide text-white">
 
-        <th className="w-[190px] px-5 py-4">
+        {/* QUOTATION */}
+        <th className="w-[220px] min-w-[220px] px-4 py-4 sm:px-5">
           Quotation
         </th>
 
-        <th className="w-[230px] px-5 py-4">
-          Client
-        </th>
-
-        <th className="w-[250px] px-5 py-4">
+        {/* PROJECT */}
+        <th className="w-[300px] min-w-[300px] px-4 py-4 sm:px-5">
           Project
         </th>
 
-        <th className="w-[140px] whitespace-nowrap px-5 py-4">
+        {/* DATE */}
+        <th className="w-[150px] min-w-[150px] whitespace-nowrap px-4 py-4 sm:px-5">
           Date
         </th>
 
-        <th className="w-[150px] whitespace-nowrap px-5 py-4">
-          Valid Until
-        </th>
-
-        <th className="w-[150px] whitespace-nowrap px-5 py-4 text-right">
+        {/* AMOUNT */}
+        <th className="w-[170px] min-w-[170px] whitespace-nowrap px-4 py-4 text-right sm:px-5">
           Amount
         </th>
 
-        {/* STICKY ACTION HEADER */}
+        {/* ACTIONS */}
         <th
           className="
             sticky
             right-0
-            z-30
-            w-[80px]
+          
+            w-[70px]
+            min-w-[70px]
             bg-violet-600
-            px-3
+            px-2
             py-4
             text-center
+            sm:w-[80px]
+            sm:min-w-[80px]
+            sm:px-3
           "
         >
           Actions
@@ -358,7 +358,8 @@ const deleteQoutation=async(id)=>{
       </tr>
     </thead>
 
-    {/* TABLE BODY */}
+
+    {/* ================= TABLE BODY ================= */}
     <tbody>
 
       {filteredQuotations.length > 0 ? (
@@ -366,43 +367,61 @@ const deleteQoutation=async(id)=>{
         filteredQuotations.map((quotation) => (
 
           <tr
-          onClick={()=>{
-           
-          }}
             key={quotation._id}
             className="
-             cursor-pointer
+              cursor-pointer
               border-b
               border-gray-100
+              bg-white
               transition
               hover:bg-violet-50/40
             "
           >
 
-            {/* QUOTATION */}
-            <td className="px-5 py-4">
+            {/* ================= QUOTATION ================= */}
+            <td className="w-[220px] min-w-[220px] px-4 py-4 sm:px-5">
 
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
 
+                {/* ICON */}
                 <div
                   className="
                     flex
-                    h-10
-                    w-10
+                    h-9
+                    w-9
                     shrink-0
                     items-center
                     justify-center
                     rounded-lg
                     bg-violet-100
                     text-violet-600
+                    sm:h-10
+                    sm:w-10
                   "
                 >
                   <FileText size={18} />
                 </div>
 
+                {/* DETAILS */}
                 <div className="min-w-0">
 
-                  <p onClick={()=>{navigate('/qoutation', {state:quotation._id})}} className="truncate text-sm font-bold text-gray-900">
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      navigate("/qoutation", {
+                        state: quotation._id,
+                      });
+                    }}
+                    className="
+                      cursor-pointer
+                      truncate
+                      text-sm
+                      font-bold
+                      text-gray-900
+                      hover:text-violet-600
+                    "
+                  >
                     {quotation.quotationNumber}
                   </p>
 
@@ -416,30 +435,14 @@ const deleteQoutation=async(id)=>{
 
             </td>
 
-            {/* CLIENT */}
-            <td className="px-5 py-4">
 
-              <div className="min-w-0">
-
-                <p className="truncate text-sm font-semibold text-gray-900">
-                  {quotation.clientName}
-                </p>
-
-                <p className="mt-0.5 truncate text-xs text-gray-500">
-                  {quotation.clientEmail}
-                </p>
-
-              </div>
-
-            </td>
-
-            {/* PROJECT */}
-            <td className="px-5 py-4">
+            {/* ================= PROJECT ================= */}
+            <td className="w-[300px] min-w-[300px] px-4 py-4 sm:px-5">
 
               <p
                 title={quotation.project}
                 className="
-                  max-w-[250px]
+                  max-w-[280px]
                   truncate
                   text-sm
                   font-medium
@@ -451,52 +454,63 @@ const deleteQoutation=async(id)=>{
 
             </td>
 
-            {/* DATE */}
-            <td className="whitespace-nowrap px-5 py-4">
+
+            {/* ================= DATE ================= */}
+            <td
+              className="
+                w-[150px]
+                min-w-[150px]
+                whitespace-nowrap
+                px-4
+                py-4
+                sm:px-5
+              "
+            >
               <p className="text-sm text-gray-700">
                 {quotation.date}
               </p>
             </td>
 
-            {/* VALID UNTIL */}
-            <td className="whitespace-nowrap px-5 py-4">
-              <p className="text-sm text-gray-700">
-                {quotation.validUntil}
-              </p>
-            </td>
 
-            {/* AMOUNT */}
-            <td className="whitespace-nowrap px-5 py-4 text-right">
-
+            {/* ================= AMOUNT ================= */}
+            <td
+              className="
+                w-[170px]
+                min-w-[170px]
+                whitespace-nowrap
+                px-4
+                py-4
+                text-right
+                sm:px-5
+              "
+            >
               <p className="text-sm font-bold text-gray-900">
                 ₹{formatPrice(quotation.amount)}
               </p>
-
             </td>
 
-            {/* ACTIONS */}
+
+            {/* ================= ACTIONS ================= */}
             <td
               className="
                 sticky
                 right-0
                 z-20
-                w-[80px]
+                w-[70px]
+                min-w-[70px]
                 bg-white
-                px-3
-                py-4
+                px-2
+                py-3
                 align-middle
                 shadow-[-5px_0_10px_-8px_rgba(0,0,0,0.35)]
+                sm:w-[80px]
+                sm:min-w-[80px]
+                sm:px-3
+                sm:py-4
               "
             >
 
-              <div
-                className="
-                  relative
-                  flex
-                  items-center
-                  justify-center
-                "
-              >
+              <div className="relative flex items-center justify-center">
 
                 {/* THREE DOT BUTTON */}
                 <button
@@ -513,8 +527,8 @@ const deleteQoutation=async(id)=>{
                   title="Actions"
                   className="
                     flex
-                    h-9
-                    w-9
+                    h-8
+                    w-8
                     items-center
                     justify-center
                     rounded-lg
@@ -525,124 +539,148 @@ const deleteQoutation=async(id)=>{
                     focus:outline-none
                     focus:ring-2
                     focus:ring-violet-200
+                    sm:h-9
+                    sm:w-9
                   "
                 >
-                  <MoreVertical size={19} />
+                  <MoreVertical size={18} />
                 </button>
 
-                {/* ACTION DROPDOWN */}
+
+                {/* ================= ACTION DROPDOWN ================= */}
                 {openActionId === quotation._id && (
 
                   <div
                     className="
                       absolute
                       right-0
-                      top-11
+                      
+                      sm:fixed
+                      sm:right-3
                       z-[100]
-                      w-36
-                      overflow-hidden
+                      w-32
+                    
                       rounded-xl
                       border
                       border-gray-200
                       bg-white
-                      p-1.5
+                      p-1
                       shadow-xl
+                     
+                      sm:w-36
                     "
                   >
 
                     {/* VIEW */}
                     <button
                       type="button"
-                      onClick={() => {
-                       
-                        navigate('/qoutation',{state:quotation._id})
-                        console.log(
-                          "View:",
-                          quotation._id
-                        );
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        setOpenActionId(null);
+
+                        navigate("/qoutation", {
+                          state: quotation._id,
+                        });
                       }}
                       className="
                         flex
                         w-full
                         items-center
-                        gap-3
+                        gap-2
                         rounded-lg
-                        px-3
+                        px-2.5
                         py-2.5
                         text-left
-                        text-sm
+                        text-xs
                         font-medium
                         text-gray-700
                         transition
                         hover:bg-blue-50
                         hover:text-blue-600
+                        sm:gap-3
+                        sm:px-3
+                        sm:text-sm
                       "
                     >
-                      <Eye size={16} />
+                      <Eye size={15} />
                       <span>View</span>
                     </button>
 
-                <button
-  type="button"
-  onClick={(e) => {
-   
-  
 
-    navigate("/edit-qoutation", {
-      state: quotation._id,
-    });
-  }}
-  className="
-    flex
-    w-full
-    items-center
-    gap-3
-    rounded-lg
-    px-3
-    py-2.5
-    text-left
-    text-sm
-    font-medium
-    text-gray-700
-    transition
-    hover:bg-violet-50
-    hover:text-violet-600
-  "
->
-  <Pencil size={16} />
-  <span>Edit</span>
-</button>
-
-                    {/* DELETE */}
+                    {/* EDIT */}
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
+
                         setOpenActionId(null);
-                        deleteQoutation(quotation._id)
-                       
+
+                        navigate("/edit-qoutation", {
+                          state: quotation._id,
+                        });
                       }}
                       className="
                         flex
                         w-full
                         items-center
-                        gap-3
+                        gap-2
                         rounded-lg
-                        px-3
+                        px-2.5
                         py-2.5
                         text-left
-                        text-sm
+                        text-xs
+                        font-medium
+                        text-gray-700
+                        transition
+                        hover:bg-violet-50
+                        hover:text-violet-600
+                        sm:gap-3
+                        sm:px-3
+                        sm:text-sm
+                      "
+                    >
+                      <Pencil size={15} />
+                      <span>Edit</span>
+                    </button>
+
+
+                    {/* DELETE */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        setOpenActionId(null);
+
+                        deleteQoutation(quotation._id);
+                      }}
+                      className="
+                        flex
+                        w-full
+                        items-center
+                        gap-2
+                        rounded-lg
+                        px-2.5
+                        py-2.5
+                        text-left
+                        text-xs
                         font-medium
                         text-gray-700
                         transition
                         hover:bg-red-50
                         hover:text-red-600
+                        sm:gap-3
+                        sm:px-3
+                        sm:text-sm
                       "
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={15} />
                       <span>Delete</span>
                     </button>
 
                   </div>
+
                 )}
 
               </div>
@@ -655,10 +693,11 @@ const deleteQoutation=async(id)=>{
 
       ) : (
 
-        /* EMPTY STATE */
+        /* ================= EMPTY STATE ================= */
         <tr>
+
           <td
-            colSpan={7}
+            colSpan={5}
             className="px-5 py-16 text-center"
           >
 
@@ -688,9 +727,7 @@ const deleteQoutation=async(id)=>{
               </p>
 
               <button
-                onClick={() => {
-                 
-                }}
+                onClick={() => navigate("/createqoutation")}
                 className="
                   mt-5
                   flex
@@ -714,6 +751,7 @@ const deleteQoutation=async(id)=>{
             </div>
 
           </td>
+
         </tr>
 
       )}

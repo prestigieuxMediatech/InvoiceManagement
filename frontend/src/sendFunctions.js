@@ -241,7 +241,7 @@ export const sendInvoiceWhatsApp = async ({
 
     const phone =
       invoiceData?.Cphone ||
-      invoiceData?.client?.phone ||
+      invoiceData?.business?.Cphone ||
       "";
 
     console.log(

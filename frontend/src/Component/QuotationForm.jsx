@@ -40,17 +40,17 @@ const getCurrentDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-const getDefaultValidUntil = () => {
-  const date = new Date();
+// const getDefaultValidUntil = () => {
+//   const date = new Date();
 
-  date.setDate(date.getDate() + 30);
+//   date.setDate(date.getDate() + 30);
 
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+//   const year = date.getFullYear();
+//   const month = String(date.getMonth() + 1).padStart(2, "0");
+//   const day = String(date.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
-};
+//   return `${year}-${month}-${day}`;
+// };
 
 /* ============================================================
    FORM SECTION
@@ -192,17 +192,7 @@ const QuotationForm = () => {
     Baddress:
       "Shop No. 6, Plot -21, Sec-09, Ammar Residency CHS, Taloja Phase -1, Panvel Raigad, Pin - 410208",
 
-    /* ----------------------------------------------------------
-       CLIENT
-       ---------------------------------------------------------- */
-
-    CbusinessName: "",
-
-    Cemail: "",
-
-    Cphone: "",
-
-    Caddress: "",
+    Cphone:"",
 
     /* ----------------------------------------------------------
        QUOTATION
@@ -210,7 +200,7 @@ const QuotationForm = () => {
 
     date: getCurrentDate(),
 
-    validUntil: getDefaultValidUntil(),
+ 
 
     /* ----------------------------------------------------------
        PROJECT
@@ -226,7 +216,7 @@ const QuotationForm = () => {
 
     billing: "Monthly",
 
-    website: "",
+   
 
     signatureName: "Prestigieux",
   });
@@ -494,28 +484,16 @@ const QuotationForm = () => {
         return;
       }
 
-      if (!formData.CbusinessName.trim()) {
-        toast.error("Please enter client name");
-        return;
-      }
+    
 
       if (!formData.date) {
         toast.error("Please select quotation date");
         return;
       }
 
-      if (!formData.validUntil) {
-        toast.error(
-          "Please select quotation validity date"
-        );
-        return;
-      }
+   
 
-      if (!formData.projectName.trim()) {
-        toast.error("Please enter project name");
-        return;
-      }
-
+    
       if (services.length === 0) {
         toast.error("Please add at least one service");
         return;
@@ -605,7 +583,7 @@ const QuotationForm = () => {
 
         date: formData.date,
 
-        validUntil: formData.validUntil,
+  
 
         billing: formData.billing,
 
@@ -614,19 +592,15 @@ const QuotationForm = () => {
           email: formData.Bemail,
           phone: formData.Bphone,
           address: formData.Baddress,
+          Cphone:formData.Cphone
         },
 
-        client: {
-          name: formData.CbusinessName,
-          email: formData.Cemail,
-          phone: formData.Cphone,
-          address: formData.Caddress,
-        },
+        
 
-        project: {
-          name: formData.projectName,
-          description: formData.projectDescription,
-        },
+        // project: {
+        //   name: formData.projectName,
+        //   description: formData.projectDescription,
+        // },
 
         
 
@@ -793,15 +767,15 @@ const QuotationForm = () => {
                 icon={CalendarDays}
               />
 
-              <InputField
-                label="Valid Until"
-                name="validUntil"
-                value={formData.validUntil}
+            
+             <InputField
+                label="Client Number"
+                name="Cphone"
+                value={formData.Cphone}
                 onChange={handleChange}
-                type="date"
-                icon={CalendarDays}
+                type="number"
+                icon={Phone}
               />
-
             </div>
 
           </FormSection>
@@ -810,7 +784,7 @@ const QuotationForm = () => {
               BUSINESS + CLIENT
               ================================================== */}
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-1">
 
             {/* BUSINESS */}
 
@@ -866,66 +840,13 @@ const QuotationForm = () => {
 
             </FormSection>
 
-            {/* CLIENT */}
-
-            <FormSection
-              icon={User}
-              title="Client Information"
-              description="Customer billing details"
-            >
-
-              <div className="space-y-4 p-5">
-
-                <InputField
-                  label="Client / Company Name"
-                  name="CbusinessName"
-                  value={formData.CbusinessName}
-                  onChange={handleChange}
-                  placeholder="Client / Company Name"
-                />
-
-                <div className="grid gap-4 sm:grid-cols-2">
-
-                  <InputField
-                    label="Email"
-                    name="Cemail"
-                    value={formData.Cemail}
-                    onChange={handleChange}
-                    type="email"
-                    placeholder="client@email.com"
-                    icon={Mail}
-                  />
-
-                  <InputField
-                    label="Phone"
-                    name="Cphone"
-                    value={formData.Cphone}
-                    onChange={handleChange}
-                    placeholder="+91 XXXXX XXXXX"
-                    icon={Phone}
-                  />
-
-                </div>
-
-                <TextAreaField
-                  label="Address"
-                  name="Caddress"
-                  value={formData.Caddress}
-                  onChange={handleChange}
-                  placeholder="Client address"
-                  rows={3}
-                />
-
-              </div>
-
-            </FormSection>
-
+          
           </div>
 
           {/* ==================================================
               PROJECT INFORMATION
               ================================================== */}
-
+{/* 
           <FormSection
             icon={BriefcaseBusiness}
             title="Project Information"
@@ -990,7 +911,7 @@ const QuotationForm = () => {
 
             </div>
 
-          </FormSection>
+          </FormSection> */}
 
           {/* ==================================================
               SERVICES
